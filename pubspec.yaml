@@ -1,6 +1,6 @@
 name: shindenshin
-description: A new Flutter package project.
-version: 0.0.2
+description: Layer communication package.
+version: 0.0.4
 homepage: https://github.com/justjew/shindenshin
 
 environment:
