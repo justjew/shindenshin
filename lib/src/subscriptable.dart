@@ -3,7 +3,7 @@ import 'dart:async';
 abstract class Subscriptable {
   final StreamController<StoreEvent> eventPool = StreamController<StoreEvent>.broadcast();
 
-  StreamSubscription<StoreEvent> subscript(
+  StreamSubscription<StoreEvent> subscribe(
     Function(StoreEvent event) fn, {
     Function? onError,
     void Function()? onDone,
