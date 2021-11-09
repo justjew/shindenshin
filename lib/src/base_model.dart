@@ -5,6 +5,10 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'api_client.dart';
 import 'pagination.dart';
 
+/// A base class to create models
+/// 
+/// A model has [id] by default which is [dynamic] type. It allows [id] to be integer, uuid etc.
+/// Need to implement [toJson] method.
 abstract class BaseModel extends Equatable {
   @HiveField(0)
   final dynamic id;
