@@ -1,6 +1,6 @@
 name: shindenshin
 description: Layer communication package. It helps to develop data layer with models and API connectors, which will be used by BLoC to build UI.
-version: 0.0.5
+version: 0.0.7
 homepage: https://github.com/justjew/shindenshin
 
 environment:
