@@ -11,6 +11,7 @@ class AuthorsPage extends Page {
   @override
   Route createRoute(BuildContext context) {
     return MaterialPageRoute(
+      settings: this,
       builder: (_) {
         return BlocProvider<AuthorListCubit>(
           create: (_) => AuthorListCubit(_authorsRepo),

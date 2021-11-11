@@ -14,6 +14,7 @@ class SingleAuthorPage extends Page {
   @override
   Route createRoute(BuildContext context) {
     return MaterialPageRoute(
+      settings: this,
       builder: (_) {
         return BlocProvider<SingleAuthorCubit>(
           create: (_) => SingleAuthorCubit(booksRepo, author),
