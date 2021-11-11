@@ -7,3 +7,6 @@ export 'src/base_store.dart';
 export 'src/pagination.dart';
 export 'src/subscriptable.dart';
 export 'src/websocket.dart';
+
+export 'package:dio/dio.dart';
+export 'package:flutter_bloc/flutter_bloc.dart';
