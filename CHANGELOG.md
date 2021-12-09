@@ -1,3 +1,8 @@
+# 0.0.8
+
+Export Hive
+Added ApiConfig
+
 # 0.0.7
 
 Updated example

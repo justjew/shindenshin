@@ -10,4 +10,10 @@ class Store extends BaseStore {
     booksRepo = BooksRepo(this);
     authorsRepo = AuthorsRepo(this);
   }
+
+  @override
+  void initApiClient() {
+    super.initApiClient();
+    ApiClient().setConfig(ApiConfig(loginField: 'phone'));
+  }
 }

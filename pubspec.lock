@@ -117,7 +117,7 @@ packages:
     source: sdk
     version: "0.0.0"
   hive:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: hive
       url: "https://pub.dartlang.org"

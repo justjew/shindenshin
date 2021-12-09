@@ -10,6 +10,7 @@ class ApiClient {
   late final String androidDegubHost;
   late final Dio client;
   late final BaseOptions options;
+  ApiConfig config = ApiConfig();
 
   bool isInitialized = false;
 
@@ -42,6 +43,10 @@ class ApiClient {
     );
     client = Dio(options);
     isInitialized = true;
+  }
+
+  void setConfig(ApiConfig config) {
+    this.config = config;
   }
 
   Future<Response> get(String action, {Map<String, dynamic>? params, bool protected = false}) {
@@ -121,7 +126,10 @@ class ApiClient {
     try {
       final Response response = await post(
         'token/',
-        body: {'email': email, 'password': password},
+        body: {
+          config.loginField: email,
+          'password': password,
+        },
       );
       final String access = response.data['access'] as String;
       final String refresh = response.data['refresh'] as String;
@@ -184,6 +192,14 @@ class ApiClient {
   void checkIfInitialized() {
     assert(isInitialized, 'ApiClient should be initialized. Call init() method.');
   }
+}
+
+class ApiConfig {
+  final String loginField;
+
+  ApiConfig({
+    this.loginField = 'email',
+  });
 }
 
 class NoStoredToken implements Exception {}

@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'store/store.dart';
 import 'views/main/main.dart';
 
-
 void main() {
   runApp(const Application());
 }
