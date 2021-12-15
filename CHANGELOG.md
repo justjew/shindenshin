@@ -1,3 +1,21 @@
+# 0.0.9
+
+Added Repo getter from Store. Changed Store initialization.
+
+```dart
+class Store extends BaseStore {
+    Store() : super([
+        ARepo.new,
+        BRepo.new,
+    ], releaseBaseHost: '');
+}
+
+final ARepo aRepo = store.get<ARepo>();
+final BRepo bRepo = store<BRepo>();
+```
+
+Removed Store from Repo
+
 # 0.0.8
 
 Export Hive
