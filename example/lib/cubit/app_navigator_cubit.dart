@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:example/models/author.dart';
+import 'package:example/store/authors_repo.dart';
 
 import 'package:example/store/store.dart';
 import 'package:example/views/authors/authors_page.dart';
@@ -21,7 +22,7 @@ class AppNavigatorCubit extends Cubit<AppNavigatorState> {
   }
 
   void authors() {
-    pages = [AuthorsPage(_store.authorsRepo)];
+    pages = [AuthorsPage(_store<AuthorsRepo>())];
     _emit();
   }
 

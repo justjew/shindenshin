@@ -1,8 +1,6 @@
 import 'package:example/models/author.dart';
 import 'package:shindenshin/shindenshin.dart';
 
-import 'store.dart';
-
 class AuthorsRepo extends BaseRepo {
   Pagination<Author> pagination = Pagination.empty();
   late final WebSocketService _webSocket;
@@ -10,7 +8,7 @@ class AuthorsRepo extends BaseRepo {
   List<Author> get authors => pagination.results;
   bool get isWsConnected => _webSocket.isActive;
 
-  AuthorsRepo(Store store) : super(store) {
+  AuthorsRepo() : super() {
     _initWebSocket();
   }
 

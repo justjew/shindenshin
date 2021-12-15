@@ -2,12 +2,10 @@ import 'package:example/models/author.dart';
 import 'package:example/models/book.dart';
 import 'package:shindenshin/shindenshin.dart';
 
-import 'store.dart';
-
 class BooksRepo extends BaseRepo {
   Book? book;
 
-  BooksRepo(Store store) : super(store);
+  BooksRepo() : super();
 
   Future<void> retreive(dynamic bookId) async {
     book = await BookApi().retrieve(bookId);
