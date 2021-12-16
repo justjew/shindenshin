@@ -1,3 +1,11 @@
+# 0.0.13
+
+Fixed apiClient path
+
+# 0.0.12
+
+Dynamic weboscket data
+
 # 0.0.11
 
 Optionional params in getBaseUri

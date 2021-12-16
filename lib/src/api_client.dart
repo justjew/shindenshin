@@ -94,7 +94,7 @@ class ApiClient {
     }
   }
 
-  Uri getBaseUri({String scheme = 'http', String path = '/api/v1', String? host}) {
+  Uri getBaseUri({String scheme = 'http', String path = '/api/v1/', String? host}) {
     String _scheme;
     String _host;
     int? port;

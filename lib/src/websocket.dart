@@ -89,9 +89,9 @@ class WebSocketService {
   void _onReceive(dynamic event, void Function(WebSocketEventMessage)? onReceive) {
     final Map eventData = jsonDecode(event as String) as Map;
     onReceive?.call(WebSocketEventMessage(
-      uuid: eventData['uuid'] as String,
-      type: eventData['type'] as String,
-      data: eventData['data'] as Map<String, dynamic>,
+      uuid: eventData['uuid'],
+      type: eventData['type'],
+      data: eventData['data'],
     ));
   }
 
@@ -137,11 +137,15 @@ class WebSocketService {
 }
 
 class WebSocketEventMessage {
-  WebSocketEventMessage({required this.uuid, required this.type, required this.data});
+  WebSocketEventMessage({
+    required this.uuid,
+    required this.type,
+    required this.data,
+  });
 
-  final String uuid;
-  final String type;
-  final Map<String, dynamic> data;
+  final String? uuid;
+  final String? type;
+  final dynamic data;
 
   Map toJson() {
     return {
