@@ -5,7 +5,7 @@ import 'package:shindenshin/shindenshin.dart';
 class BooksRepo extends BaseRepo {
   Book? book;
 
-  BooksRepo() : super();
+  BooksRepo(BaseStore store) : super(store);
 
   Future<void> retreive(dynamic bookId) async {
     book = await BookApi().retrieve(bookId);

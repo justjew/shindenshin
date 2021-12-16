@@ -1,3 +1,7 @@
+# 0.0.10
+
+Restored Store link in Repo
+
 # 0.0.9
 
 Added Repo getter from Store. Changed Store initialization.

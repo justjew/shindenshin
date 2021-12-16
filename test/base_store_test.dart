@@ -24,13 +24,13 @@ class Store extends BaseStore {
 }
 
 class ARepo extends BaseRepo {
-  ARepo() : super();
+  ARepo(BaseStore store) : super(store);
 }
 
 class BRepo extends BaseRepo {
-  BRepo() : super();
+  BRepo(BaseStore store) : super(store);
 }
 
 class CRepo extends BaseRepo {
-  CRepo() : super();
+  CRepo(BaseStore store) : super(store);
 }

@@ -8,7 +8,7 @@ class AuthorsRepo extends BaseRepo {
   List<Author> get authors => pagination.results;
   bool get isWsConnected => _webSocket.isActive;
 
-  AuthorsRepo() : super() {
+  AuthorsRepo(BaseStore store) : super(store) {
     _initWebSocket();
   }
 
