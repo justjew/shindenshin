@@ -94,31 +94,31 @@ class ApiClient {
     }
   }
 
-  Uri getBaseUri() {
-    String scheme;
-    String host;
+  Uri getBaseUri({String scheme = 'http', String path = '/api/v1', String? host}) {
+    String _scheme;
+    String _host;
     int? port;
 
     const int _localPort = 8000;
 
     if (forceUseReleaseHost || kReleaseMode || kProfileMode) {
-      scheme = 'https';
-      host = releaseBaseHost;
+      _scheme = scheme + 's';
+      _host = releaseBaseHost;
     } else if (Platform.isAndroid) {
-      scheme = 'http';
-      host = androidDegubHost;
+      _scheme = scheme;
+      _host = androidDegubHost;
       port = _localPort;
     } else {
-      scheme = 'http';
-      host = '127.0.0.1';
+      _scheme = scheme;
+      _host = '127.0.0.1';
       port = _localPort;
     }
 
     return Uri(
-      scheme: scheme,
-      host: host,
+      scheme: _scheme,
+      host: host ?? _host,
       port: port,
-      path: '/api/v1/',
+      path: path,
     );
   }
 

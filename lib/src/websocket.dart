@@ -7,17 +7,6 @@ import 'package:flutter/foundation.dart';
 import 'api_client.dart';
 
 class WebSocketService {
-  WebSocketService(
-    this.uri, {
-    this.onReceive,
-    this.onDone,
-    this.onError,
-    this.onConnecting,
-    this.onConnected,
-    this.onConnectionFail,
-    this.reconnectIn = const Duration(seconds: 10),
-  });
-
   final Uri uri;
   final void Function(WebSocketEventMessage)? onReceive;
   final void Function()? onDone;
@@ -27,6 +16,19 @@ class WebSocketService {
   final void Function(dynamic)? onConnectionFail;
   final Duration reconnectIn;
   StreamSubscription? _subscription;
+  Map<String, dynamic>? headers;
+
+  WebSocketService(
+    this.uri, {
+    this.onReceive,
+    this.onDone,
+    this.onError,
+    this.onConnecting,
+    this.onConnected,
+    this.onConnectionFail,
+    this.reconnectIn = const Duration(seconds: 10),
+    this.headers,
+  });
 
   WebSocket? _ws;
   bool _isConnected = false;
@@ -39,7 +41,10 @@ class WebSocketService {
     try {
       await _ws?.close(WebSocketStatus.goingAway);
       onConnecting?.call();
-      _ws = await WebSocket.connect(uri.toString());
+      _ws = await WebSocket.connect(
+        uri.toString(),
+        headers: headers,
+      );
       _ws!.pingInterval = const Duration(seconds: 10);
 
       if (_ws?.readyState == WebSocket.open) {

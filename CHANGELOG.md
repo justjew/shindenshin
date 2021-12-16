@@ -1,3 +1,7 @@
+# 0.0.11
+
+Optionional params in getBaseUri
+
 # 0.0.10
 
 Restored Store link in Repo
