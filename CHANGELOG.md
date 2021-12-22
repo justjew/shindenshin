@@ -1,3 +1,7 @@
+# 0.0.14
+
+Added `forceUseReleaseHost` and `androidDegubHost` to `BaseStore`
+
 # 0.0.13
 
 Fixed apiClient path
