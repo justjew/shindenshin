@@ -16,7 +16,7 @@ abstract class BaseStore extends Subscriptable {
     this.forceUseReleaseHost = false,
     this.androidDegubHost = '10.0.2.2',
   }) {
-    _registerRepos(_contructors);
+    registerRepos(_contructors);
     initApiClient();
   }
 
@@ -40,7 +40,7 @@ abstract class BaseStore extends Subscriptable {
     _disposeAllRepos();
   }
 
-  void _registerRepos(List<BaseRepo Function(BaseStore)> _contructors) {
+  void registerRepos(List<BaseRepo Function(BaseStore)> _contructors) {
     for (final c in _contructors) {
       repos.add(c(this));
     }
