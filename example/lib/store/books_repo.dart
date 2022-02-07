@@ -3,12 +3,15 @@ import 'package:example/models/book.dart';
 import 'package:shindenshin/shindenshin.dart';
 
 class BooksRepo extends BaseRepo {
+  late final BookApi bookApi;
   Book? book;
 
-  BooksRepo(BaseStore store) : super(store);
+  BooksRepo(BaseStore store) : super(store) {
+    bookApi = BookApi(store.apiClient, BookParser());
+  }
 
   Future<void> retreive(dynamic bookId) async {
-    book = await BookApi().retrieve(bookId);
+    book = await bookApi.retrieve(bookId);
   }
 
   Future<void> delete() async {
@@ -16,11 +19,11 @@ class BooksRepo extends BaseRepo {
       return;
     }
 
-    return BookApi().detele(book!.id);
+    return bookApi.detele(book!.id);
   }
 
   Future<List<Book>> getAuthorBooks(Author author) {
     final Map<String, dynamic> params = {'author': author.id};
-    return BookApi().list(params: params);
+    return bookApi.list(params: params);
   }
 }

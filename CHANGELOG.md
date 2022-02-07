@@ -1,3 +1,14 @@
+# 0.1.0
+
+**BREAKING CHANGES!**
+
+`ApiClient` singleton is now deprecated.
+Store constructor receives instance of `BaseApiClient`.
+
+`fromJson` moved to `ModelParser` class.
+
+`BaseApiClient` and `ModelParser` should be provided to `ModelApi` constructor.
+
 # 0.0.17
 
 Made `repos` as set

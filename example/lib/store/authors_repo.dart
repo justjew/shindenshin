@@ -14,7 +14,7 @@ class AuthorsRepo extends BaseRepo {
 
   Future<void> fetch() async {
     final Map<String, dynamic> params = {'page': pagination.page};
-    pagination = await AuthorApi().listPaginated(params: params);
+    pagination = await AuthorApi(store.apiClient, AuthorParser()).listPaginated(params: params);
   }
 
   Future<void> next([int? page]) {

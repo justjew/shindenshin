@@ -28,11 +28,11 @@ void main() {
 
 class Store extends BaseStore {
   Store()
-      : super([
+      : super(BaseApiClient(Dio()), [
           ARepo.new,
           BRepo.new,
           CRepo.new,
-        ], releaseBaseHost: '');
+        ]);
 }
 
 class ARepo extends BaseRepo {

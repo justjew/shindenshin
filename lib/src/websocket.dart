@@ -4,8 +4,6 @@ import 'dart:io' show WebSocket, WebSocketStatus;
 
 import 'package:flutter/foundation.dart';
 
-import 'api_client.dart';
-
 class WebSocketService {
   final Uri uri;
   final void Function(WebSocketEventMessage)? onReceive;
@@ -57,28 +55,19 @@ class WebSocketService {
         );
         onConnected?.call();
       } else {
-        if (kDebugMode) {
-          // ignore: avoid_print
-          print('[!]Connection Denied');
-        }
+        debugPrint('[!]Connection Denied');
         _isConnected = false;
         reconnect();
       }
     } on Exception catch (error) {
-      if (kDebugMode) {
-        // ignore: avoid_print
-        print('[!]Error -- ${error.toString()}');
-      }
+      debugPrint('[!]Error -- ${error.toString()}');
       onConnectionFail?.call(error);
       reconnect();
     }
   }
 
   void reconnect() {
-    if (kDebugMode) {
-      // ignore: avoid_print
-      print('[!]Reconnecting in ${reconnectIn.inSeconds} sec...');
-    }
+    debugPrint('[!]Reconnecting in ${reconnectIn.inSeconds} sec...');
     _reconnectionTimer = Timer(reconnectIn, connect);
   }
 
@@ -96,10 +85,7 @@ class WebSocketService {
   }
 
   void _onDone() {
-    if (kDebugMode) {
-      // ignore: avoid_print
-      print('[+]Done :');
-    }
+    debugPrint('[+]Done :');
     _isConnected = false;
     onDone?.call();
     if (_reconnectOnDone) {
@@ -108,21 +94,10 @@ class WebSocketService {
   }
 
   void _onError(dynamic error) {
-    if (kDebugMode) {
-      // ignore: avoid_print
-      print('[!]Error -- ${error.toString()}');
-    }
+    debugPrint('[!]Error -- ${error.toString()}');
     _isConnected = false;
     onError?.call(error);
     connect();
-  }
-
-  static Uri getBaseUri({required String path}) {
-    final String scheme = kDebugMode ? 'ws' : 'wss';
-    final Uri apiUri = ApiClient().getBaseUri();
-    final String host = apiUri.host;
-    final int port = apiUri.port;
-    return Uri(scheme: scheme, host: host, port: port, path: '/ws/$path/');
   }
 
   void close() {

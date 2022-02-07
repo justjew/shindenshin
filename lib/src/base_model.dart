@@ -2,11 +2,11 @@ import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-import 'api_client.dart';
+import 'base_api_client.dart';
 import 'pagination.dart';
 
 /// A base class to create models
-/// 
+///
 /// A model has [id] by default which is [dynamic] type. It allows [id] to be integer, uuid etc.
 /// Need to implement [toJson] method.
 abstract class BaseModel extends Equatable {
@@ -21,33 +21,41 @@ abstract class BaseModel extends Equatable {
   Map toJson();
 }
 
-abstract class BaseModelApi<T extends BaseModel> {
-  abstract String url;
-  final ApiClient _apiClient = ApiClient();
-
-  final bool rootList = false;
-
+abstract class BaseModelParser<T extends BaseModel> {
   T fromJson(Map json);
 
   List<T> fromList(List list) {
     return list.map((e) => fromJson(e)).toList();
   }
+}
+
+abstract class BaseModelApi<T extends BaseModel> {
+  final BaseModelParser<T> _parser;
+  final BaseApiClient _apiClient;
+  final bool rootList = false;
+
+  abstract String url;
+
+  BaseModelApi(this._apiClient, this._parser);
 
   Future<T> retrieve(dynamic id, {bool protected = false}) async {
     final Response response = await get(id.toString(), protected: protected);
     final Map data = response.data as Map;
 
-    return fromJson(data);
+    return _parser.fromJson(data);
   }
 
-  Future<List<T>> list({Map<String, dynamic>? params, bool protected = false}) async {
+  Future<List<T>> list(
+      {Map<String, dynamic>? params, bool protected = false}) async {
     if (rootList) {
-      final Response response = await get('', params: params, protected: protected);
+      final Response response =
+          await get('', params: params, protected: protected);
       final List results = response.data;
-      return results.map((e) => fromJson(e as Map)).toList();
+      return results.map((e) => _parser.fromJson(e as Map)).toList();
     }
 
-    final Pagination<T> pagination = await listPaginated(params: params, protected: protected);
+    final Pagination<T> pagination =
+        await listPaginated(params: params, protected: protected);
     return pagination.results;
   }
 
@@ -55,17 +63,19 @@ abstract class BaseModelApi<T extends BaseModel> {
     Map<String, dynamic>? params,
     bool protected = false,
   }) async {
-    final Response response = await get('', params: params, protected: protected);
+    final Response response =
+        await get('', params: params, protected: protected);
     final dynamic data = response.data;
 
-    return Pagination.fromJson(data, fromJson);
+    return Pagination.fromJson(data, _parser.fromJson);
   }
 
   Future<T> create(T source, {bool protected = true}) async {
-    final Response response = await post('', body: source.toJson(), protected: protected);
+    final Response response =
+        await post('', body: source.toJson(), protected: protected);
     final Map data = response.data as Map;
 
-    return fromJson(data);
+    return _parser.fromJson(data);
   }
 
   Future<T> update(T source, {bool protected = true}) async {
@@ -76,14 +86,15 @@ abstract class BaseModelApi<T extends BaseModel> {
     );
     final Map data = response.data as Map;
 
-    return fromJson(data);
+    return _parser.fromJson(data);
   }
 
   Future<void> detele(dynamic id, {dynamic body, bool protected = true}) {
     return delete('/$id', body: body, protected: protected);
   }
 
-  Future<Response> get(String action, {Map<String, dynamic>? params, bool protected = false}) {
+  Future<Response> get(String action,
+      {Map<String, dynamic>? params, bool protected = false}) {
     return _apiClient.get('$url$action/', params: params, protected: protected);
   }
 
@@ -95,7 +106,8 @@ abstract class BaseModelApi<T extends BaseModel> {
     return _apiClient.put('$url$action/', body: body, protected: protected);
   }
 
-  Future<Response> delete(String action, {dynamic body, bool protected = true}) {
+  Future<Response> delete(String action,
+      {dynamic body, bool protected = true}) {
     return _apiClient.delete('$url$action/', body: body, protected: protected);
   }
 }
