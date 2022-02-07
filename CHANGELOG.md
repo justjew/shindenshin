@@ -1,3 +1,15 @@
+# 0.0.17
+
+Made `repos` as set
+
+# 0.0.16
+
+`registerRepos()` is now public
+
+# 0.0.15
+
+Updated dependencies
+
 # 0.0.14
 
 Added `forceUseReleaseHost` and `androidDegubHost` to `BaseStore`

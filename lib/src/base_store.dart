@@ -8,7 +8,7 @@ abstract class BaseStore extends Subscriptable {
   final bool forceUseReleaseHost;
   final String androidDegubHost;
 
-  final List<BaseRepo> repos = [];
+  final Set<BaseRepo> repos = {};
 
   BaseStore(
     List<BaseRepo Function(BaseStore)> _contructors, {
@@ -42,8 +42,19 @@ abstract class BaseStore extends Subscriptable {
 
   void registerRepos(List<BaseRepo Function(BaseStore)> _contructors) {
     for (final c in _contructors) {
+      final BaseRepo repo = c(this);
+      final Type type = repo.runtimeType;
+
+      if (repos.where((e) => e.runtimeType == type).isNotEmpty) {
+        return;
+      }
+
       repos.add(c(this));
     }
+  }
+
+  bool contains<T>() {
+    return repos.whereType<T>().isNotEmpty;
   }
 
   void _disposeAllRepos() {
