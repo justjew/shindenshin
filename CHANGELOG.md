@@ -1,3 +1,35 @@
+# 0.1.8
+
+No longer clearing result list on `next` and `previous`
+
+# 0.1.7
+
+Fixed generic bug
+
+# 0.1.6
+
+Added `append` method to `Pagination`
+
+# 0.1.5
+
+Fixed `get` method in `BaseModelApi`
+
+# 0.1.4
+
+Added `onSendProgress` and `onReceiveProgress` to `BaseModelApi` methods
+
+# 0.1.3
+
+Added `onSendProgress` and `onReceiveProgress` to `BaseApiClient` methods
+
+# 0.1.2
+
+Fixed Store constructor bug
+
+# 0.1.1
+
+`BaseModelApi`s fields made public
+
 # 0.1.0
 
 **BREAKING CHANGES!**

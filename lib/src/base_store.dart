@@ -28,7 +28,7 @@ abstract class BaseStore extends Subscriptable {
         return;
       }
 
-      repos.add(c(this));
+      repos.add(repo);
     }
   }
 

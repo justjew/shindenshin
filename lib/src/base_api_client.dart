@@ -17,11 +17,13 @@ class BaseApiClient {
     String action, {
     Map<String, dynamic>? params,
     bool protected = false,
+    void Function(int, int)? onReceiveProgress,
   }) {
     return client.get(
       action,
       queryParameters: params,
       options: _getOptions(protected: protected),
+      onReceiveProgress: onReceiveProgress,
     );
   }
 
@@ -29,11 +31,15 @@ class BaseApiClient {
     String action, {
     dynamic body,
     bool protected = false,
+    void Function(int, int)? onSendProgress,
+    void Function(int, int)? onReceiveProgress,
   }) {
     return client.post(
       action,
       data: body,
       options: _getOptions(protected: protected),
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
     );
   }
 
@@ -41,11 +47,15 @@ class BaseApiClient {
     String action, {
     dynamic body,
     bool protected = false,
+    void Function(int, int)? onSendProgress,
+    void Function(int, int)? onReceiveProgress,
   }) {
     return client.put(
       action,
       data: body,
       options: _getOptions(protected: protected),
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
     );
   }
 

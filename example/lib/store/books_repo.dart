@@ -19,7 +19,7 @@ class BooksRepo extends BaseRepo {
       return;
     }
 
-    return bookApi.detele(book!.id);
+    return bookApi.destroy(book!.id);
   }
 
   Future<List<Book>> getAuthorBooks(Author author) {
