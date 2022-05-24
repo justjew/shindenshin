@@ -4,7 +4,6 @@ import 'package:bloc/bloc.dart';
 import 'package:example/models/author.dart';
 import 'package:example/store/authors_repo.dart';
 import 'package:flutter/foundation.dart';
-import 'package:dio/dio.dart';
 import 'package:shindenshin/shindenshin.dart';
 
 part 'author_list_state.dart';

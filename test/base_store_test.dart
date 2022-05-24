@@ -13,14 +13,26 @@ void main() {
     final bool isCRepo = cRepo is CRepo;
     expect(isCRepo, true);
   });
+
+  test('Cannot add same repo', () {
+    final Store store = Store();
+    store.registerRepos([
+      ARepo.new,
+    ]);
+
+    expect(store.contains<ARepo>(), true);
+    expect(store.repos.whereType<ARepo>().length, 1);
+    expect(store.repos.length, 3);
+  });
 }
 
 class Store extends BaseStore {
-  Store() : super([
-    ARepo.new,
-    BRepo.new,
-    CRepo.new,
-  ], releaseBaseHost: '');
+  Store()
+      : super(BaseApiClient(Dio()), [
+          ARepo.new,
+          BRepo.new,
+          CRepo.new,
+        ]);
 }
 
 class ARepo extends BaseRepo {

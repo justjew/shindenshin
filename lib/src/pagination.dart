@@ -41,7 +41,7 @@ class Pagination<T> {
       total: total,
       pageSize: pageSize,
       lastPage: lastPage,
-      results: [],
+      results: results,
     );
   }
 
@@ -51,7 +51,20 @@ class Pagination<T> {
       total: total,
       pageSize: pageSize,
       lastPage: lastPage,
-      results: [],
+      results: results,
+    );
+  }
+
+  Pagination<T> append(Pagination other) {
+    return Pagination<T>(
+      page: other.page,
+      total: other.total,
+      pageSize: other.pageSize,
+      lastPage: other.lastPage,
+      results: [
+        ...results,
+        ...other.results,
+      ],
     );
   }
 }

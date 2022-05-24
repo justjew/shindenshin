@@ -19,16 +19,20 @@ class Author extends BaseModel {
   }
 }
 
-class AuthorApi extends BaseModelApi<Author> {
-  @override
-  String url = 'authors';
-
+class AuthorParser extends BaseModelParser<Author> {
   @override
   Author fromJson(Map json) {
     return Author(
       id: json['id'],
       name: json['full_name'],
-      books: BookApi().fromList(json['books']),
+      books: BookParser().fromList(json['books']),
     );
   }
+}
+
+class AuthorApi extends BaseModelApi<Author> {
+  @override
+  String url = 'authors';
+
+  AuthorApi(BaseApiClient apiClient, BaseModelParser<Author> parser) : super(apiClient, parser);
 }

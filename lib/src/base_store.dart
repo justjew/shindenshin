@@ -1,31 +1,14 @@
-import 'package:shindenshin/src/api_client.dart';
+import 'package:shindenshin/src/base_api_client.dart';
 import 'package:shindenshin/src/subscriptable.dart';
 
 import 'base_repo.dart';
 
 abstract class BaseStore extends Subscriptable {
-  final String releaseBaseHost;
-  final bool forceUseReleaseHost;
-  final String androidDegubHost;
+  final BaseApiClient apiClient;
+  final Set<BaseRepo> repos = {};
 
-  final List<BaseRepo> repos = [];
-
-  BaseStore(
-    List<BaseRepo Function(BaseStore)> _contructors, {
-    required this.releaseBaseHost,
-    this.forceUseReleaseHost = false,
-    this.androidDegubHost = '10.0.2.2',
-  }) {
-    _registerRepos(_contructors);
-    initApiClient();
-  }
-
-  void initApiClient() {
-    ApiClient().init(
-      releaseBaseHost: releaseBaseHost,
-      forceUseReleaseHost: forceUseReleaseHost,
-      androidDegubHost: androidDegubHost,
-    );
+  BaseStore(this.apiClient, List<BaseRepo Function(BaseStore)> _contructors) {
+    registerRepos(_contructors);
   }
 
   T get<T extends BaseRepo>() {
@@ -36,14 +19,25 @@ abstract class BaseStore extends Subscriptable {
     return get<T>();
   }
 
-  void dispose() {
-    _disposeAllRepos();
+  void registerRepos(List<BaseRepo Function(BaseStore)> _contructors) {
+    for (final c in _contructors) {
+      final BaseRepo repo = c(this);
+      final Type type = repo.runtimeType;
+
+      if (repos.where((e) => e.runtimeType == type).isNotEmpty) {
+        return;
+      }
+
+      repos.add(repo);
+    }
   }
 
-  void _registerRepos(List<BaseRepo Function(BaseStore)> _contructors) {
-    for (final c in _contructors) {
-      repos.add(c(this));
-    }
+  bool contains<T>() {
+    return repos.whereType<T>().isNotEmpty;
+  }
+
+  void dispose() {
+    _disposeAllRepos();
   }
 
   void _disposeAllRepos() {

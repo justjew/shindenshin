@@ -1,6 +1,7 @@
 import 'package:example/cubit/app_navigator_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shindenshin/shindenshin.dart';
 
 import 'store/store.dart';
 import 'views/main/main.dart';
@@ -18,7 +19,20 @@ class Application extends StatefulWidget {
 
 class _ApplicationState extends State<Application> {
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
-  final Store store = Store();
+
+  late final BaseApiClient apiClient;
+  late final Store store;
+
+  @override
+  void initState() {
+    super.initState();
+
+    final BaseOptions options = BaseOptions(
+      baseUrl: 'https://example.com/api/v1/',
+    );
+    apiClient = BaseApiClient(Dio(options));
+    store = Store(apiClient);
+  }
 
   @override
   Widget build(BuildContext context) {

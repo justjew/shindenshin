@@ -1,3 +1,62 @@
+# 0.1.9
+
+Added `BaseConfig` and `BaseEnvironment` classes to manage production and development configurations
+
+# 0.1.8
+
+No longer clearing result list on `next` and `previous`
+
+# 0.1.7
+
+Fixed generic bug
+
+# 0.1.6
+
+Added `append` method to `Pagination`
+
+# 0.1.5
+
+Fixed `get` method in `BaseModelApi`
+
+# 0.1.4
+
+Added `onSendProgress` and `onReceiveProgress` to `BaseModelApi` methods
+
+# 0.1.3
+
+Added `onSendProgress` and `onReceiveProgress` to `BaseApiClient` methods
+
+# 0.1.2
+
+Fixed Store constructor bug
+
+# 0.1.1
+
+`BaseModelApi`s fields made public
+
+# 0.1.0
+
+**BREAKING CHANGES!**
+
+`ApiClient` singleton is now deprecated.
+Store constructor receives instance of `BaseApiClient`.
+
+`fromJson` moved to `ModelParser` class.
+
+`BaseApiClient` and `ModelParser` should be provided to `ModelApi` constructor.
+
+# 0.0.17
+
+Made `repos` as set
+
+# 0.0.16
+
+`registerRepos()` is now public
+
+# 0.0.15
+
+Updated dependencies
+
 # 0.0.14
 
 Added `forceUseReleaseHost` and `androidDegubHost` to `BaseStore`
