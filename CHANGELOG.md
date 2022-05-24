@@ -1,3 +1,7 @@
+# 0.1.9
+
+Added `BaseConfig` and `BaseEnvironment` classes to manage production and development configurations
+
 # 0.1.8
 
 No longer clearing result list on `next` and `previous`
