@@ -8,6 +8,12 @@ void main() {
     expect(env.config.apiUri.scheme, 'https');
   });
 
+  test('Lowercase environment name', () {
+    final Environment env = Environment('prod');
+    expect(env.config is _ProdConfig, true);
+    expect(env.config.apiUri.scheme, 'https');
+  });
+
   test('Getting default config', () {
     final Environment envOther = Environment('OTHER');
     expect(envOther.config is _DevConfig, true);
@@ -24,7 +30,7 @@ class Environment extends BaseEnvironment<_Config> {
 
   @override
   _Config getConfig(String environment) {
-    switch (environment) {
+    switch (environment.toUpperCase()) {
       case BaseEnvironment.prod:
         return _ProdConfig();
       default:
