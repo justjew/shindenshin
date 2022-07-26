@@ -6,10 +6,10 @@ class Author extends BaseModel {
   final List<Book> books;
 
   const Author({
-    required int id,
+    super.id,
     required this.name,
     required this.books,
-  }) : super(id);
+  });
 
   @override
   Map toJson() {

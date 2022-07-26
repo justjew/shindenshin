@@ -1,3 +1,27 @@
+# 0.2.3
+
+Removed `const` keyword from `.empty()` pagination constructor
+
+# 0.2.2
+
+`insert`, `add` and `addAll` methods in `Pagination` class
+
+# 0.2.1
+
+`const` Pagination constructors
+
+# 0.2.0
+
+[BREAKING]
+
+Field `id` in `BaseModel` become as named parameter in constructor to let you use super initializer from dart 2.17.
+
+Also updated minimal sdk version.
+
+# 0.1.10
+
+Added Accept-Language header
+
 # 0.1.9
 
 Added `BaseConfig` and `BaseEnvironment` classes to manage production and development configurations

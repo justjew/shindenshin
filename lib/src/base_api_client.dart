@@ -6,8 +6,12 @@ import 'package:flutter/foundation.dart';
 class BaseApiClient {
   final Dio client;
   String? _access;
+  String acceptLanguage;
 
-  BaseApiClient(this.client);
+  BaseApiClient(
+    this.client, {
+    this.acceptLanguage = 'ru-ru',
+  });
 
   void setAccessToken(String? token) {
     _access = token;
@@ -87,7 +91,10 @@ class BaseApiClient {
 
   Options _getOptions({required bool protected}) {
     if (protected && _access != null) {
-      return Options(headers: {'Authorization': 'Bearer $_access'});
+      return Options(headers: {
+        'Authorization': 'Bearer $_access',
+        'Accept-Language': acceptLanguage,
+      });
     }
 
     return Options();

@@ -8,11 +8,11 @@ class Book extends BaseModel {
   final Author? author;
 
   const Book({
-    required int id,
+    super.id,
     required this.name,
     required this.pageCount,
     required this.author,
-  }) : super(id);
+  });
 
   @override
   Map toJson() {

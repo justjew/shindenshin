@@ -9,7 +9,7 @@ class Pagination<T> {
     return page == lastPage;
   }
 
-  Pagination({
+  const Pagination({
     required this.page,
     required this.total,
     required this.pageSize,
@@ -65,6 +65,42 @@ class Pagination<T> {
         ...results,
         ...other.results,
       ],
+    );
+  }
+
+  Pagination<T> insert(int index, T obj) {
+    final List<T> copyResults = results.toList();
+    copyResults.insert(index, obj);
+    return Pagination<T>(
+      page: page,
+      total: total,
+      pageSize: pageSize,
+      lastPage: lastPage,
+      results: copyResults,
+    );
+  }
+
+  Pagination<T> add(T obj) {
+    final List<T> copyResults = results.toList();
+    copyResults.add(obj);
+    return Pagination<T>(
+      page: page,
+      total: total,
+      pageSize: pageSize,
+      lastPage: lastPage,
+      results: copyResults,
+    );
+  }
+
+  Pagination<T> addAll(Iterable<T> objs) {
+    final List<T> copyResults = results.toList();
+    copyResults.addAll(objs);
+    return Pagination<T>(
+      page: page,
+      total: total,
+      pageSize: pageSize,
+      lastPage: lastPage,
+      results: copyResults,
     );
   }
 }

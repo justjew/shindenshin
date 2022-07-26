@@ -16,7 +16,7 @@ abstract class BaseModel extends Equatable {
   @override
   List<Object?> get props => [id];
 
-  const BaseModel(this.id);
+  const BaseModel({required this.id});
 
   Map toJson();
 }
