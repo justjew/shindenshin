@@ -1,3 +1,7 @@
+# 0.2.4
+
+`BaseModelApi` url changed to getter
+
 # 0.2.3
 
 Removed `const` keyword from `.empty()` pagination constructor

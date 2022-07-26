@@ -34,7 +34,7 @@ abstract class BaseModelApi<T extends BaseModel> {
   final BaseApiClient apiClient;
   final bool rootList = false;
 
-  abstract String url;
+  String get url;
 
   BaseModelApi(this.apiClient, this.parser);
 
