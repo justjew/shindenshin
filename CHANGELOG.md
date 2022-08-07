@@ -1,3 +1,22 @@
+# 0.2.8
+
+Removed useless cookie
+
+# 0.2.7
+
+`cookieAuth` param in constructor
+
+# 0.2.6
+
+Added Cookie authorization
+
+# 0.2.5
+
+Added exceptions:
+
+- `ModelParseError`
+- `ModelApiUrlNotImplemented`
+
 # 0.2.4
 
 `BaseModelApi` url changed to getter

@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:shindenshin/src/exceptions.dart';
 
 import 'base_api_client.dart';
 import 'pagination.dart';
@@ -34,7 +35,7 @@ abstract class BaseModelApi<T extends BaseModel> {
   final BaseApiClient apiClient;
   final bool rootList = false;
 
-  String get url;
+  String get url => throw ModelApiUrlNotImplemented();
 
   BaseModelApi(this.apiClient, this.parser);
 

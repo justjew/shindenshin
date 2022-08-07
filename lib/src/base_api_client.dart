@@ -26,7 +26,7 @@ class BaseApiClient {
     return client.get(
       action,
       queryParameters: params,
-      options: _getOptions(protected: protected),
+      options: getOptions(protected: protected),
       onReceiveProgress: onReceiveProgress,
     );
   }
@@ -41,7 +41,7 @@ class BaseApiClient {
     return client.post(
       action,
       data: body,
-      options: _getOptions(protected: protected),
+      options: getOptions(protected: protected),
       onSendProgress: onSendProgress,
       onReceiveProgress: onReceiveProgress,
     );
@@ -57,7 +57,7 @@ class BaseApiClient {
     return client.put(
       action,
       data: body,
-      options: _getOptions(protected: protected),
+      options: getOptions(protected: protected),
       onSendProgress: onSendProgress,
       onReceiveProgress: onReceiveProgress,
     );
@@ -71,7 +71,7 @@ class BaseApiClient {
     return client.delete(
       action,
       data: body,
-      options: _getOptions(protected: protected),
+      options: getOptions(protected: protected),
     );
   }
 
@@ -89,15 +89,19 @@ class BaseApiClient {
     );
   }
 
-  Options _getOptions({required bool protected}) {
-    if (protected && _access != null) {
-      return Options(headers: {
-        'Authorization': 'Bearer $_access',
-        'Accept-Language': acceptLanguage,
-      });
+  Options getOptions({required bool protected}) {
+    Map<String, dynamic> headers = {
+      'Accept-Language': acceptLanguage,
+    };
+    Options options = Options(headers: headers);
+    if (!protected || _access == null) {
+      return options;
     }
 
-    return Options();
+    headers.addAll({
+      'Authorization': 'Bearer $_access',
+    });
+    return options.copyWith(headers: headers);
   }
 
   String _reformatUrlIfInDebug(String url) {
