@@ -1,22 +1,19 @@
 import 'package:example/models/book.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:shindenshin/shindenshin.dart';
 
-class Author extends BaseModel {
-  final String name;
-  final List<Book> books;
+part 'author.freezed.dart';
+part 'author.g.dart';
 
-  const Author({
-    super.id,
-    required this.name,
-    required this.books,
-  });
+@freezed
+class Author extends BaseModel with _$Author {
+  const factory Author({
+    required dynamic id,
+    required String name,
+    required List<Book> books,
+  }) = _Author;
 
-  @override
-  Map toJson() {
-    return {
-      'id': id,
-    };
-  }
+  factory Author.fromJson(Map<String, Object?> json) => _$AuthorFromJson(json);
 }
 
 class AuthorParser extends BaseModelParser<Author> {

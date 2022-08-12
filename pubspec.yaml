@@ -1,6 +1,6 @@
 name: shindenshin
 description: Layer communication package. It helps to develop data layer with models and API connectors, which will be used by BLoC to build UI.
-version: 0.2.8
+version: 0.3.1
 homepage: https://github.com/justjew/shindenshin
 
 environment:
@@ -9,10 +9,8 @@ environment:
 
 dependencies:
   dio: ^4.0.6
-  equatable: ^2.0.3
   flutter:
     sdk: flutter
-  hive_flutter: ^1.1.0
 
 dev_dependencies:
   flutter_test:

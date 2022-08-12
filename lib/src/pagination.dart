@@ -17,7 +17,7 @@ class Pagination<T> {
     required this.results,
   });
 
-  Pagination.fromJson(Map json, T Function(Map) itemBuilder)
+  Pagination.fromJson(Map json, T Function(Map<String, Object?>) itemBuilder)
       : page = json['page'],
         total = json['total'],
         pageSize = json['page_size'],

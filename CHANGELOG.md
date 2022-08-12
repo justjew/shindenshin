@@ -1,3 +1,7 @@
+# 0.3.1
+
+Freezed
+
 # 0.2.8
 
 Removed useless cookie

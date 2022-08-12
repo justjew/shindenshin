@@ -12,4 +12,3 @@ export 'src/base_environment.dart';
 export 'src/exceptions.dart';
 
 export 'package:dio/dio.dart';
-export 'package:equatable/equatable.dart';

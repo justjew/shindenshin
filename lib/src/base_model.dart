@@ -1,31 +1,17 @@
 import 'package:dio/dio.dart';
-import 'package:equatable/equatable.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shindenshin/src/exceptions.dart';
 
 import 'base_api_client.dart';
 import 'pagination.dart';
 
-/// A base class to create models
-///
-/// A model has [id] by default which is [dynamic] type. It allows [id] to be integer, uuid etc.
-/// Need to implement [toJson] method.
-abstract class BaseModel extends Equatable {
-  @HiveField(0)
-  final dynamic id;
-
-  @override
-  List<Object?> get props => [id];
-
-  const BaseModel({required this.id});
-
-  Map toJson();
+abstract class BaseModel {
+  const BaseModel();
 }
 
 abstract class BaseModelParser<T extends BaseModel> {
-  T fromJson(Map json);
+  T fromJson(Map<String, Object?> json);
 
-  List<T> fromList(List list) {
+  List<T> fromList(List<Map<String, Object?>> list) {
     return list.map((e) => fromJson(e)).toList();
   }
 }
@@ -33,30 +19,36 @@ abstract class BaseModelParser<T extends BaseModel> {
 abstract class BaseModelApi<T extends BaseModel> {
   final BaseModelParser<T> parser;
   final BaseApiClient apiClient;
-  final bool rootList = false;
 
   String get url => throw ModelApiUrlNotImplemented();
 
-  BaseModelApi(this.apiClient, this.parser);
+  BaseModelApi(
+    this.apiClient,
+    this.parser,
+  );
 
-  Future<T> retrieve(dynamic id, {bool protected = false}) async {
+  Future<T> retrieve(
+    dynamic id, {
+    bool protected = false,
+  }) async {
     final Response response = await get('/${id.toString()}', protected: protected);
-    final Map data = response.data as Map;
+    final Map<String, Object?> data = response.data;
 
     return parser.fromJson(data);
   }
 
-  Future<List<T>> list(
-      {Map<String, dynamic>? params, bool protected = false}) async {
+  Future<List<T>> list({
+    Map<String, dynamic>? params,
+    bool protected = false,
+    bool rootList = false,
+  }) async {
     if (rootList) {
-      final Response response =
-          await get('', params: params, protected: protected);
+      final Response response = await get('', params: params, protected: protected);
       final List results = response.data;
-      return results.map((e) => parser.fromJson(e as Map)).toList();
+      return results.map((e) => parser.fromJson(e)).toList();
     }
 
-    final Pagination<T> pagination =
-        await listPaginated(params: params, protected: protected);
+    final Pagination<T> pagination = await listPaginated(params: params, protected: protected);
     return pagination.results;
   }
 
@@ -64,34 +56,43 @@ abstract class BaseModelApi<T extends BaseModel> {
     Map<String, dynamic>? params,
     bool protected = false,
   }) async {
-    final Response response =
-        await get('', params: params, protected: protected);
+    final Response response = await get('', params: params, protected: protected);
     final dynamic data = response.data;
 
     return Pagination.fromJson(data, parser.fromJson);
   }
 
-  Future<T> create(T source, {bool protected = true}) async {
-    final Response response =
-        await post('', body: source.toJson(), protected: protected);
-    final Map data = response.data as Map;
+  Future<T> create(
+    Map source, {
+    bool protected = true,
+  }) async {
+    final Response response = await post('', body: source, protected: protected);
+    final Map<String, Object?> data = response.data;
 
     return parser.fromJson(data);
   }
 
-  Future<T> update(T source, {bool protected = true}) async {
-    final Response response = await put(
-      '/${source.id}',
-      body: source.toJson(),
+  Future<T> update(
+    dynamic id,
+    Map source, {
+    bool protected = true,
+  }) async {
+    final Response response = await put('/$id', body: source, protected: protected);
+    final Map<String, Object?> data = response.data;
+
+    return parser.fromJson(data);
+  }
+
+  Future<void> destroy(
+    dynamic id, {
+    dynamic body,
+    bool protected = true,
+  }) {
+    return delete(
+      '/$id',
+      body: body,
       protected: protected,
     );
-    final Map data = response.data as Map;
-
-    return parser.fromJson(data);
-  }
-
-  Future<void> destroy(dynamic id, {dynamic body, bool protected = true}) {
-    return delete('/$id', body: body, protected: protected);
   }
 
   Future<Response> get(
