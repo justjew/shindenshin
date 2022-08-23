@@ -23,5 +23,7 @@ abstract class Subscriptable {
 }
 
 abstract class StoreEvent {
-  dynamic initiator;
+  final dynamic initiator;
+
+  StoreEvent({this.initiator});
 }

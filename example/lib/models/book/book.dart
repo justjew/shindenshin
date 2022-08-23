@@ -9,7 +9,7 @@ part 'book.g.dart';
 class Book extends BaseModel with _$Book {
   const factory Book({
     required dynamic id,
-    required String name,
+    @Default('qwer') required String name,
     required int? pageCount,
     required Author? author,
   }) = _Book;
