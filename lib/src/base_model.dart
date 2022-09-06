@@ -11,8 +11,8 @@ abstract class BaseModel {
 abstract class BaseModelParser<T extends BaseModel> {
   T fromJson(Map<String, Object?> json);
 
-  List<T> fromList(List<Map<String, Object?>> list) {
-    return list.map((e) => fromJson(e)).toList();
+  List<T> fromList(List list) {
+    return list.cast<Map<String, Object?>>().map((e) => fromJson(e)).toList();
   }
 }
 
@@ -95,13 +95,13 @@ abstract class BaseModelApi<T extends BaseModel> {
     );
   }
 
-  Future<Response> get(
+  Future<Response<K>> get<K>(
     String action, {
     Map<String, dynamic>? params,
     bool protected = false,
     void Function(int, int)? onReceiveProgress,
   }) {
-    return apiClient.get(
+    return apiClient.get<K>(
       '$url$action/',
       params: params,
       protected: protected,
@@ -109,28 +109,28 @@ abstract class BaseModelApi<T extends BaseModel> {
     );
   }
 
-  Future<Response> post(
+  Future<Response<K>> post<K>(
     String action, {
     dynamic body,
     bool protected = true,
     void Function(int, int)? onSendProgress,
     void Function(int, int)? onReceiveProgress,
   }) {
-    return apiClient.post(
+    return apiClient.post<K>(
       '$url$action/',
       body: body,
       protected: protected,
     );
   }
 
-  Future<Response> put(
+  Future<Response<K>> put<K>(
     String action, {
     dynamic body,
     bool protected = true,
     void Function(int, int)? onSendProgress,
     void Function(int, int)? onReceiveProgress,
   }) {
-    return apiClient.put(
+    return apiClient.put<K>(
       '$url$action/',
       body: body,
       protected: protected,
@@ -139,12 +139,12 @@ abstract class BaseModelApi<T extends BaseModel> {
     );
   }
 
-  Future<Response> delete(
+  Future<Response<K>> delete<K>(
     String action, {
     dynamic body,
     bool protected = true,
   }) {
-    return apiClient.delete(
+    return apiClient.delete<K>(
       '$url$action/',
       body: body,
       protected: protected,

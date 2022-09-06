@@ -5,6 +5,8 @@ abstract class BaseRepo extends Subscriptable {
 
   BaseRepo(this.store);
 
+  void onRegisterComplete() {}
+
   void dispose() {
     eventPool.close();
   }

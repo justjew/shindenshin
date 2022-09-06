@@ -17,13 +17,13 @@ class BaseApiClient {
     _access = token;
   }
 
-  Future<Response> get(
+  Future<Response<T>> get<T>(
     String action, {
     Map<String, dynamic>? params,
     bool protected = false,
     void Function(int, int)? onReceiveProgress,
   }) {
-    return client.get(
+    return client.get<T>(
       action,
       queryParameters: params,
       options: getOptions(protected: protected),
@@ -31,14 +31,14 @@ class BaseApiClient {
     );
   }
 
-  Future<Response> post(
+  Future<Response<T>> post<T>(
     String action, {
     dynamic body,
     bool protected = false,
     void Function(int, int)? onSendProgress,
     void Function(int, int)? onReceiveProgress,
   }) {
-    return client.post(
+    return client.post<T>(
       action,
       data: body,
       options: getOptions(protected: protected),
@@ -47,14 +47,14 @@ class BaseApiClient {
     );
   }
 
-  Future<Response> put(
+  Future<Response<T>> put<T>(
     String action, {
     dynamic body,
     bool protected = false,
     void Function(int, int)? onSendProgress,
     void Function(int, int)? onReceiveProgress,
   }) {
-    return client.put(
+    return client.put<T>(
       action,
       data: body,
       options: getOptions(protected: protected),
@@ -63,12 +63,12 @@ class BaseApiClient {
     );
   }
 
-  Future<Response> delete(
+  Future<Response<T>> delete<T>(
     String action, {
     dynamic body,
     bool protected = false,
   }) {
-    return client.delete(
+    return client.delete<T>(
       action,
       data: body,
       options: getOptions(protected: protected),

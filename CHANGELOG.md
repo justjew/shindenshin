@@ -1,3 +1,15 @@
+# 0.3.5
+
+Added `onRegisterComplete` repo method which is called on every repo was registered in store
+
+# 0.3.4
+
+Casting list
+
+# 0.3.3
+
+Generic types for base api requests
+
 # 0.3.2
 
 Base constructor for `StoreEvent`

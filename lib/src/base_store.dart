@@ -30,6 +30,10 @@ abstract class BaseStore extends Subscriptable {
 
       repos.add(repo);
     }
+
+    for (final repo in repos) {
+      repo.onRegisterComplete();
+    }
   }
 
   bool contains<T>() {
