@@ -1,3 +1,7 @@
+# 0.3.6
+
+`ENV` option besides `ENVIRONMENT`
+
 # 0.3.5
 
 Added `onRegisterComplete` repo method which is called on every repo was registered in store

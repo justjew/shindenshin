@@ -6,12 +6,12 @@ abstract class BaseEnvironment<T extends BaseConfig> {
 
   late final T config;
 
-  BaseEnvironment([String? environment]) {
-    config = getConfig(environment ??
-        const String.fromEnvironment(
-          'ENVIRONMENT',
-          defaultValue: dev,
-        ));
+  BaseEnvironment([String? forceEnv]) {
+    String env = const String.fromEnvironment('ENVIRONMENT');
+    if (env == '') {
+      env = const String.fromEnvironment('ENV', defaultValue: dev);
+    }
+    config = getConfig(forceEnv ?? env);
   }
 
   T getConfig(String environment);
