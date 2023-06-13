@@ -7,6 +7,8 @@ abstract class BaseStore extends Subscriptable {
   final BaseApiClient apiClient;
   final Set<BaseRepo> repos = {};
 
+  final Set<BaseRepo> _tempRepos = {};
+
   BaseStore(this.apiClient, List<BaseRepo Function(BaseStore)> _contructors) {
     registerRepos(_contructors);
   }
@@ -34,6 +36,24 @@ abstract class BaseStore extends Subscriptable {
     for (final repo in repos) {
       repo.onRegisterComplete();
     }
+  }
+
+  T getTempRepo<T extends BaseRepo>(T Function(BaseStore) constructor) {
+    if (_tempRepos.whereType<T>().isNotEmpty) {
+      return _tempRepos.singleWhere((e) => e is T) as T;
+    }
+
+    final T repo = constructor(this);
+    _tempRepos.add(repo);
+    return repo;
+  }
+
+  void disposeTempRepo<T>() {
+    if (_tempRepos.whereType<T>().isEmpty) {
+      return;
+    }
+    _tempRepos.singleWhere((e) => e is T).dispose();
+    _tempRepos.removeWhere((e) => e is T);
   }
 
   bool contains<T>() {
