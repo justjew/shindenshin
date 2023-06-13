@@ -1,3 +1,7 @@
+# 0.4.0
+
+upgrade dart version
+
 # 0.3.6
 
 `ENV` option besides `ENVIRONMENT`
