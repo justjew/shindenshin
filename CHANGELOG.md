@@ -1,3 +1,11 @@
+# 0.6.1
+
+Fix
+
+# 0.6.0
+
+Verbose
+
 # 0.5.0
 
 Temp repos

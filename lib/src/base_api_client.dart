@@ -37,7 +37,7 @@ class BaseApiClient {
       _verboseResponse(response, verbose);
       return response;
     } on DioException catch (error) {
-      _verboseResponse(error.response as Response<T>, verbose);
+      _verboseResponse(error.response, verbose);
       rethrow;
     } catch (_) {
       rethrow;
@@ -64,7 +64,7 @@ class BaseApiClient {
       _verboseResponse(response, verbose);
       return response as Response<T>;
     } on DioException catch (error) {
-      _verboseResponse(error.response as Response<T>, verbose);
+      _verboseResponse(error.response, verbose);
       rethrow;
     } catch (_) {
       rethrow;
@@ -91,7 +91,7 @@ class BaseApiClient {
       _verboseResponse(response, verbose);
       return response as Response<T>;
     } on DioException catch (error) {
-      _verboseResponse(error.response as Response<T>, verbose);
+      _verboseResponse(error.response, verbose);
       rethrow;
     } catch (_) {
       rethrow;
@@ -114,7 +114,7 @@ class BaseApiClient {
       _verboseResponse(response, verbose);
       return response as Response<T>;
     } on DioException catch (error) {
-      _verboseResponse(error.response as Response<T>, verbose);
+      _verboseResponse(error.response, verbose);
       rethrow;
     } catch (_) {
       rethrow;
@@ -158,8 +158,12 @@ class BaseApiClient {
     return url;
   }
 
-  void _verboseResponse(Response response, bool verbose) {
+  void _verboseResponse(dynamic response, bool verbose) {
     if (!verbose) {
+      return;
+    }
+
+    if (response is! Response) {
       return;
     }
 
