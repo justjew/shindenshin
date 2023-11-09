@@ -33,7 +33,8 @@ class WebSocketService {
   bool _reconnectOnDone = true;
   Timer? _reconnectionTimer;
 
-  bool get isActive => _isConnected && _ws != null && _ws!.readyState == WebSocket.open;
+  bool get isActive =>
+      _isConnected && _ws != null && _ws!.readyState == WebSocket.open;
 
   Future<void> connect() async {
     try {
@@ -75,7 +76,10 @@ class WebSocketService {
     _ws?.add(eventMessage.toString());
   }
 
-  void _onReceive(dynamic event, void Function(WebSocketEventMessage)? onReceive) {
+  void _onReceive(
+    dynamic event,
+    void Function(WebSocketEventMessage)? onReceive,
+  ) {
     final Map eventData = jsonDecode(event as String) as Map;
     onReceive?.call(WebSocketEventMessage(
       uuid: eventData['uuid'],

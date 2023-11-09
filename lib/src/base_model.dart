@@ -30,8 +30,13 @@ abstract class BaseModelApi<T extends BaseModel> {
   Future<T> retrieve(
     dynamic id, {
     bool protected = false,
+    bool verbose = false,
   }) async {
-    final Response response = await get('/${id.toString()}', protected: protected);
+    final Response response = await get(
+      '/${id.toString()}',
+      protected: protected,
+      verbose: verbose,
+    );
     final Map<String, Object?> data = response.data;
 
     return parser.fromJson(data);
@@ -41,22 +46,35 @@ abstract class BaseModelApi<T extends BaseModel> {
     Map<String, dynamic>? params,
     bool protected = false,
     bool rootList = false,
+    bool verbose = false,
   }) async {
     if (rootList) {
-      final Response response = await get('', params: params, protected: protected);
+      final Response response = await get(
+        '',
+        params: params,
+        protected: protected,
+        verbose: verbose,
+      );
       final List results = response.data;
       return results.map((e) => parser.fromJson(e)).toList();
     }
 
-    final Pagination<T> pagination = await listPaginated(params: params, protected: protected);
+    final Pagination<T> pagination =
+        await listPaginated(params: params, protected: protected);
     return pagination.results;
   }
 
   Future<Pagination<T>> listPaginated({
     Map<String, dynamic>? params,
     bool protected = false,
+    bool verbose = false,
   }) async {
-    final Response response = await get('', params: params, protected: protected);
+    final Response response = await get(
+      '',
+      params: params,
+      protected: protected,
+      verbose: verbose,
+    );
     final dynamic data = response.data;
 
     return Pagination.fromJson(data, parser.fromJson);
@@ -65,8 +83,14 @@ abstract class BaseModelApi<T extends BaseModel> {
   Future<T> create(
     Map source, {
     bool protected = true,
+    bool verbose = false,
   }) async {
-    final Response response = await post('', body: source, protected: protected);
+    final Response response = await post(
+      '',
+      body: source,
+      protected: protected,
+      verbose: verbose,
+    );
     final Map<String, Object?> data = response.data;
 
     return parser.fromJson(data);
@@ -76,8 +100,14 @@ abstract class BaseModelApi<T extends BaseModel> {
     dynamic id,
     Map source, {
     bool protected = true,
+    bool verbose = false,
   }) async {
-    final Response response = await put('/$id', body: source, protected: protected);
+    final Response response = await put(
+      '/$id',
+      body: source,
+      protected: protected,
+      verbose: verbose,
+    );
     final Map<String, Object?> data = response.data;
 
     return parser.fromJson(data);
@@ -87,11 +117,13 @@ abstract class BaseModelApi<T extends BaseModel> {
     dynamic id, {
     dynamic body,
     bool protected = true,
+    bool verbose = false,
   }) {
     return delete(
       '/$id',
       body: body,
       protected: protected,
+      verbose: verbose,
     );
   }
 
@@ -100,12 +132,14 @@ abstract class BaseModelApi<T extends BaseModel> {
     Map<String, dynamic>? params,
     bool protected = false,
     void Function(int, int)? onReceiveProgress,
+    bool verbose = false,
   }) {
     return apiClient.get<K>(
       '$url$action/',
       params: params,
       protected: protected,
       onReceiveProgress: onReceiveProgress,
+      verbose: verbose,
     );
   }
 
@@ -115,11 +149,13 @@ abstract class BaseModelApi<T extends BaseModel> {
     bool protected = true,
     void Function(int, int)? onSendProgress,
     void Function(int, int)? onReceiveProgress,
+    bool verbose = false,
   }) {
     return apiClient.post<K>(
       '$url$action/',
       body: body,
       protected: protected,
+      verbose: verbose,
     );
   }
 
@@ -129,6 +165,7 @@ abstract class BaseModelApi<T extends BaseModel> {
     bool protected = true,
     void Function(int, int)? onSendProgress,
     void Function(int, int)? onReceiveProgress,
+    bool verbose = false,
   }) {
     return apiClient.put<K>(
       '$url$action/',
@@ -136,6 +173,7 @@ abstract class BaseModelApi<T extends BaseModel> {
       protected: protected,
       onSendProgress: onSendProgress,
       onReceiveProgress: onReceiveProgress,
+      verbose: verbose,
     );
   }
 
@@ -143,11 +181,13 @@ abstract class BaseModelApi<T extends BaseModel> {
     String action, {
     dynamic body,
     bool protected = true,
+    bool verbose = false,
   }) {
     return apiClient.delete<K>(
       '$url$action/',
       body: body,
       protected: protected,
+      verbose: verbose,
     );
   }
 }
